@@ -1,0 +1,3 @@
+# Projects Explorer: only index.php (one folder up) and assets/ should be reachable from a browser.
+# assets/.htaccess opens that folder again.
+Require all denied

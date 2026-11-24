@@ -1,0 +1,9 @@
+# Each user's own settings (copied from config.example.php); never shared.
+explorer/config.php
+
+# Editor and OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini

@@ -1,0 +1,2 @@
+# Projects Explorer: CSS and JS must load in the browser (explorer/.htaccess blocks everything else).
+Require all granted

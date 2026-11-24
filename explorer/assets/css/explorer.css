@@ -1,0 +1,555 @@
+/*
+ * Projects Explorer: styles.
+ * Class prefix pv- (BEM). States use is-*. Colours, radii and spacing are variables below.
+ */
+
+/* ---- Design tokens: light theme ---- */
+:root {
+    color-scheme: light;
+    --pv-bg: #f3f6fb;
+    --pv-sidebar: #fbfdff;
+    --pv-surface: #ffffff;
+    --pv-surface-soft: #f7f9fc;
+    --pv-text: #162236;
+    --pv-muted: #55657a;
+    --pv-border: #d8e1ec;
+    --pv-accent: #2563eb;
+    --pv-accent-text: #ffffff;
+    --pv-accent-soft: #e7efff;
+    --pv-folder: #a35400;
+    --pv-folder-soft: #fff3df;
+    --pv-folder-tab: #ffd9a3;
+    --pv-file: #475569;
+    --pv-file-soft: #eef2f6;
+    --pv-good: #166534;
+    --pv-good-soft: #e3f6e8;
+    --pv-warn: #9a2a2a;
+    --pv-warn-soft: #fdeeee;
+    --pv-scroll: #b9c6d6;
+    --pv-scroll-hover: #8b9cb2;
+    --pv-focus: #2563eb;
+
+    --pv-radius-sm: 10px;
+    --pv-radius: 14px;
+    --pv-radius-lg: 18px;
+    --pv-gap: 16px;
+    --pv-font: "Segoe UI", system-ui, -apple-system, Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+/* ---- Dark theme ----
+ * Defined twice on purpose: once for people whose system is dark (unless they picked light
+ * with the toggle), and once for people who picked dark with the toggle. */
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+        color-scheme: dark;
+        --pv-bg: #0e1522;
+        --pv-sidebar: #111a28;
+        --pv-surface: #162232;
+        --pv-surface-soft: #0f1827;
+        --pv-text: #edf3fb;
+        --pv-muted: #a3b1c4;
+        --pv-border: #2a3a50;
+        --pv-accent: #7db7ff;
+        --pv-accent-text: #0e1522;
+        --pv-accent-soft: rgba(125, 183, 255, 0.14);
+        --pv-folder: #f4b25d;
+        --pv-folder-soft: rgba(244, 178, 93, 0.14);
+        --pv-folder-tab: rgba(244, 178, 93, 0.55);
+        --pv-file: #c2cfdf;
+        --pv-file-soft: rgba(194, 207, 223, 0.12);
+        --pv-good: #86efac;
+        --pv-good-soft: rgba(134, 239, 172, 0.12);
+        --pv-warn: #fca5a5;
+        --pv-warn-soft: rgba(252, 165, 165, 0.1);
+        --pv-scroll: #34465e;
+        --pv-scroll-hover: #4b6180;
+        --pv-focus: #7db7ff;
+    }
+}
+:root[data-theme="dark"] {
+    color-scheme: dark;
+    --pv-bg: #0e1522;
+    --pv-sidebar: #111a28;
+    --pv-surface: #162232;
+    --pv-surface-soft: #0f1827;
+    --pv-text: #edf3fb;
+    --pv-muted: #a3b1c4;
+    --pv-border: #2a3a50;
+    --pv-accent: #7db7ff;
+    --pv-accent-text: #0e1522;
+    --pv-accent-soft: rgba(125, 183, 255, 0.14);
+    --pv-folder: #f4b25d;
+    --pv-folder-soft: rgba(244, 178, 93, 0.14);
+    --pv-folder-tab: rgba(244, 178, 93, 0.55);
+    --pv-file: #c2cfdf;
+    --pv-file-soft: rgba(194, 207, 223, 0.12);
+    --pv-good: #86efac;
+    --pv-good-soft: rgba(134, 239, 172, 0.12);
+    --pv-warn: #fca5a5;
+    --pv-warn-soft: rgba(252, 165, 165, 0.1);
+    --pv-scroll: #34465e;
+    --pv-scroll-hover: #4b6180;
+    --pv-focus: #7db7ff;
+}
+
+/* ---- Base ---- */
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+.pv-body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: var(--pv-font);
+    line-height: 1.5;
+    background: var(--pv-bg);
+    color: var(--pv-text);
+}
+.pv-body a { color: inherit; }
+.pv-body button,
+.pv-body input { font: inherit; color: inherit; }
+.pv-body h1,
+.pv-body h2,
+.pv-body h3,
+.pv-body p { margin: 0; }
+
+/* Visible focus for keyboard users on every interactive element. */
+.pv-body :focus-visible {
+    outline: 3px solid var(--pv-focus);
+    outline-offset: 2px;
+}
+.pv-main:focus { outline: none; }
+
+/* ---- Thin scrollbars (page and sidebar) ---- */
+html,
+.pv-sidebar {
+    scrollbar-width: thin;
+    scrollbar-color: var(--pv-scroll) transparent;
+}
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--pv-scroll); border-radius: 8px; }
+::-webkit-scrollbar-thumb:hover { background: var(--pv-scroll-hover); }
+
+/* ---- Helpers ---- */
+.pv-sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+.is-hidden { display: none !important; }
+
+/* Skip link: hidden until a keyboard user tabs to it. */
+.pv-skip {
+    position: absolute;
+    left: 12px;
+    top: -60px;
+    z-index: 10;
+    padding: 10px 14px;
+    border-radius: var(--pv-radius-sm);
+    background: var(--pv-accent);
+    color: var(--pv-accent-text) !important;
+    text-decoration: none;
+}
+.pv-skip:focus { top: 12px; }
+
+/* ---- Layout shell ---- */
+.pv-shell {
+    display: grid;
+    grid-template-columns: 280px minmax(0, 1fr);
+    min-height: 100vh;
+}
+.pv-main {
+    padding: 24px;
+    min-width: 0;
+}
+
+/* ---- Sidebar ---- */
+.pv-sidebar {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+    padding: 22px;
+    background: var(--pv-sidebar);
+    border-right: 1px solid var(--pv-border);
+}
+.pv-brand { margin-bottom: 8px; }
+.pv-brand__title {
+    font-size: 22px;
+    font-weight: 700;
+}
+.pv-brand__copy {
+    margin-top: 6px;
+    color: var(--pv-muted);
+    font-size: 14px;
+}
+.pv-side-block { margin-top: 22px; }
+/* Gap under the title is larger than the gap between links, so each title groups with its list. */
+.pv-side-block__title {
+    margin-bottom: 12px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--pv-muted);
+}
+summary.pv-side-block__title {
+    cursor: pointer;
+    min-height: 24px;
+}
+.pv-side-block--folders:not([open]) summary.pv-side-block__title { margin-bottom: 0; }
+.pv-side-list {
+    display: grid;
+    /* minmax(0, 1fr) lets long folder names shorten with "..." instead of widening the list. */
+    grid-template-columns: minmax(0, 1fr);
+    gap: 6px;
+}
+.pv-side-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    min-height: 44px;
+    padding: 8px 12px;
+    border: 1px solid var(--pv-border);
+    border-radius: 12px;
+    background: var(--pv-surface);
+    text-decoration: none;
+}
+.pv-side-link:hover,
+.pv-side-link.is-active {
+    border-color: var(--pv-accent);
+    background: var(--pv-accent-soft);
+}
+.pv-side-link__main {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+}
+.pv-side-link__label {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.pv-side-link__kind {
+    flex: 0 0 auto;
+    color: var(--pv-muted);
+    font-size: 11px;
+    text-transform: uppercase;
+}
+
+/* ---- Header ---- */
+.pv-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 18px;
+    padding: 24px;
+    background: var(--pv-surface);
+    border: 1px solid var(--pv-border);
+    border-radius: var(--pv-radius-lg);
+}
+.pv-header__copy { min-width: 0; }
+.pv-header__title {
+    font-size: 26px;
+    line-height: 1.25;
+    word-break: break-word;
+}
+.pv-header__note {
+    margin-top: 10px;
+    color: var(--pv-muted);
+}
+
+.pv-crumbs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 0;
+    margin: 8px 0 0;
+    padding: 0;
+    list-style: none;
+    color: var(--pv-muted);
+    font-size: 14px;
+}
+.pv-crumbs__item + .pv-crumbs__item::before {
+    content: "/";
+    padding: 0 8px;
+}
+.pv-crumbs a { text-decoration: none; }
+.pv-crumbs a:hover { color: var(--pv-accent); text-decoration: underline; }
+
+.pv-stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 14px 0 0;
+    padding: 0;
+    list-style: none;
+}
+.pv-stat {
+    padding: 4px 12px;
+    border: 1px solid var(--pv-border);
+    border-radius: 999px;
+    background: var(--pv-surface-soft);
+    color: var(--pv-muted);
+    font-size: 13px;
+}
+
+.pv-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 10px;
+    flex: 0 1 auto;
+}
+.pv-search {
+    width: 280px;
+    max-width: 100%;
+    min-height: 44px;
+    padding: 0 13px;
+    border: 1px solid var(--pv-border);
+    border-radius: 12px;
+    background: var(--pv-surface-soft);
+}
+
+/* ---- Buttons ---- */
+.pv-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    padding: 0 16px;
+    border: 1px solid var(--pv-border);
+    border-radius: 12px;
+    background: var(--pv-surface);
+    text-decoration: none;
+    white-space: nowrap;
+    cursor: pointer;
+}
+.pv-btn:hover { border-color: var(--pv-accent); }
+.pv-btn--primary {
+    border-color: var(--pv-accent);
+    background: var(--pv-accent);
+    color: var(--pv-accent-text) !important;
+}
+.pv-btn--primary:hover { filter: brightness(1.08); }
+
+/* ---- Notices ---- */
+.pv-notice {
+    margin-top: var(--pv-gap);
+    padding: 12px 14px;
+    border: 1px solid var(--pv-warn);
+    border-radius: 12px;
+    background: var(--pv-warn-soft);
+}
+.pv-notice--info {
+    border-color: var(--pv-border);
+    background: var(--pv-surface);
+}
+
+/* ---- Sections and grid ---- */
+.pv-sections {
+    display: grid;
+    gap: var(--pv-gap);
+    margin-top: var(--pv-gap);
+}
+.pv-section {
+    padding: 20px;
+    background: var(--pv-surface);
+    border: 1px solid var(--pv-border);
+    border-radius: var(--pv-radius-lg);
+}
+.pv-section__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 14px;
+}
+.pv-section__title { font-size: 18px; }
+.pv-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr));
+    gap: 14px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+.pv-empty {
+    padding: 16px;
+    border: 1px dashed var(--pv-border);
+    border-radius: var(--pv-radius);
+    background: var(--pv-surface-soft);
+    color: var(--pv-muted);
+}
+
+/* ---- Tile (one file or folder) ---- */
+.pv-tile {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 16px;
+    border: 1px solid var(--pv-border);
+    border-radius: var(--pv-radius);
+    background: var(--pv-surface-soft);
+}
+.pv-tile:hover,
+.pv-tile:focus-within { border-color: var(--pv-accent); }
+.pv-tile__head {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+}
+.pv-tile__body { min-width: 0; }
+.pv-tile__title {
+    font-size: 16px;
+    font-weight: 600;
+    word-break: break-word;
+}
+.pv-tile__link { text-decoration: none; }
+.pv-tile__link:hover { color: var(--pv-accent); text-decoration: underline; }
+.pv-tile__meta {
+    margin-top: 4px;
+    color: var(--pv-muted);
+    font-size: 13px;
+}
+.pv-tile__note {
+    color: var(--pv-muted);
+    font-size: 13px;
+}
+.pv-tile__pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+.pv-tile__pills:empty { display: none; }
+.pv-tile__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: auto;
+}
+.pv-tile__actions:empty { display: none; }
+
+/* ---- Pills ---- */
+.pv-pill {
+    padding: 3px 9px;
+    border-radius: 999px;
+    background: var(--pv-file-soft);
+    color: var(--pv-file);
+    font-size: 12px;
+    font-weight: 600;
+}
+.pv-pill--type {
+    background: var(--pv-folder-soft);
+    color: var(--pv-folder);
+}
+.pv-pill--active {
+    background: var(--pv-good-soft);
+    color: var(--pv-good);
+}
+.pv-pill--warn {
+    background: var(--pv-warn-soft);
+    color: var(--pv-warn);
+}
+
+/* ---- Icons (pure CSS, no image files) ---- */
+.pv-icon {
+    position: relative;
+    flex: 0 0 auto;
+    width: 34px;
+    height: 28px;
+}
+.pv-icon::before,
+.pv-icon::after {
+    content: "";
+    position: absolute;
+}
+/* Folder: a body with a tab on top. */
+.pv-icon--folder::before {
+    left: 0;
+    top: 6px;
+    width: 100%;
+    height: 22px;
+    border-radius: 6px;
+    background: var(--pv-folder-soft);
+    border: 1px solid var(--pv-folder-tab);
+}
+.pv-icon--folder::after {
+    left: 3px;
+    top: 1px;
+    width: 14px;
+    height: 8px;
+    border-radius: 4px 4px 0 0;
+    background: var(--pv-folder-tab);
+}
+/* File: a page with a folded corner. */
+.pv-icon--file::before {
+    left: 6px;
+    top: 0;
+    width: 22px;
+    height: 28px;
+    border-radius: 5px;
+    background: var(--pv-file-soft);
+    border: 1px solid var(--pv-border);
+}
+.pv-icon--file::after {
+    right: 6px;
+    top: 0;
+    width: 9px;
+    height: 9px;
+    border-top-right-radius: 5px;
+    background: linear-gradient(225deg, var(--pv-surface) 50%, var(--pv-border) 50%);
+}
+/* Tool: a rounded square with a dot. */
+.pv-icon--tool::before {
+    left: 6px;
+    top: 3px;
+    width: 22px;
+    height: 22px;
+    border-radius: 6px;
+    background: var(--pv-accent-soft);
+    border: 1px solid var(--pv-accent);
+}
+.pv-icon--tool::after {
+    left: 14px;
+    top: 11px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--pv-accent);
+}
+
+/* ---- Tablet and phone: sidebar stacks above the content ---- */
+@media (max-width: 980px) {
+    /* minmax(0, 1fr), not 1fr: a plain 1fr column grows to fit long unbreakable names and causes sideways scrolling. */
+    .pv-shell { grid-template-columns: minmax(0, 1fr); }
+    .pv-sidebar {
+        position: static;
+        height: auto;
+        border-right: 0;
+        border-bottom: 1px solid var(--pv-border);
+    }
+}
+@media (max-width: 760px) {
+    .pv-main { padding: 16px; }
+    .pv-sidebar { padding: 16px; }
+    .pv-header {
+        flex-direction: column;
+        padding: 18px;
+    }
+    .pv-toolbar {
+        justify-content: flex-start;
+        width: 100%;
+    }
+    .pv-search { width: 100%; }
+    .pv-section { padding: 16px; }
+}
