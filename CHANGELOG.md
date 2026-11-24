@@ -1,10 +1,17 @@
 # Changelog
 
+## 2.0.1 (2026-11-24)
+
+### Fixed
+
+- After installing 2.0.0 with `install.bat`, the dashboard showed a PHP error. The installer skips files named `config.php` (to keep your settings), and one of the dashboard's own files had that name. It is now called `settings.php`. If you installed 2.0.0, run the 2.0.1 `install.bat` and it works.
+
 ## 2.0.0 (2026-11-24)
 
 Works with any htdocs layout, not just a `Projects` folder.
 
 ### Added
+
 - Settings file (`explorer/config.php`) for the start folder, pinned folders, hidden names, sidebar tools and more. Updates never overwrite it.
 - Project detection: Laravel opens `public/`, Vite and other built sites open `dist/` or `build/`, WordPress is labelled, Node projects get a note instead of a broken link.
 - Files that often hold secrets (`.env`, `.sql`, `.key` and others) are listed without an open link.
@@ -17,6 +24,7 @@ Works with any htdocs layout, not just a `Projects` folder.
 - MIT licence.
 
 ### Changed
+
 - Starts in `htdocs/Projects` only if it exists, otherwise in `htdocs`.
 - Installer looks for XAMPP on every drive (A to Z) and accepts a path argument.
 - Installer saves XAMPP's page once as `index.php.original` and never overwrites it.
@@ -25,6 +33,7 @@ Works with any htdocs layout, not just a `Projects` folder.
 - Minimum PHP version is now 8.0.
 
 ### Fixed
+
 - Running the installer twice overwrote the backup of XAMPP's page with this dashboard.
 - The "htdocs root" link and breadcrumb went to the start folder instead of the root.
 - `?path[]=x` in the address crashed the page.

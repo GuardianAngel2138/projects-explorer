@@ -6,7 +6,7 @@
 
 defined('PV_ENTRY') || exit;
 
-require __DIR__ . '/src/config.php';
+require __DIR__ . '/src/settings.php';
 require __DIR__ . '/src/guard.php';
 require __DIR__ . '/src/paths.php';
 require __DIR__ . '/src/detect.php';
@@ -94,6 +94,6 @@ foreach ($currentRelative === '' ? [] : explode('/', $currentRelative) as $part)
 $heading = $currentRelative === '' ? $rootLabel : basename($currentDir);
 $updated = date('d M Y, h:i A', latestTime($currentDir));
 $assetUrl = appUrl() . 'explorer/assets/';
-$assetVersion = '2.0.0';
+$assetVersion = '2.0.1';
 
 require __DIR__ . '/views/layout.php';

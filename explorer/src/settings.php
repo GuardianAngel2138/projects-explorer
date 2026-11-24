@@ -1,6 +1,7 @@
 <?php
 /**
  * Projects Explorer: settings loader.
+ * (Named settings.php, not config.php: the installer skips every file called config.php so it never overwrites the user's own settings.)
  * Reads the defaults from config.example.php, then applies the user's config.php on top.
  */
 
